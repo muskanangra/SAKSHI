@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Shield, ChevronDown, LogOut, CheckCircle2, User, RefreshCw } from 'lucide-react';
 import { useSakshi } from '../../context/SakshiContext';
-import { AshokaEmblem, IndianFlagBadge } from '../Emblems';
+import { IndianFlagBadge } from '../Emblems';
 import { SakshiRole } from '../../types/sakshi';
+
 
 interface PortalHeaderProps {
   onLogout: () => void;
@@ -51,23 +52,27 @@ export const PortalHeader: React.FC<PortalHeaderProps> = ({ onLogout, onOpenAudi
       {/* Main App Navigation Bar */}
       <div className="px-4 sm:px-8 py-2.5 flex items-center justify-between">
         
-        {/* Left: Emblem + SAKSHI Title + Role Tag */}
+        {/* Left: SAKSHI Eye-Shield Logo + Title + Role Tag */}
         <div className="flex items-center gap-3">
-          <div className="flex-shrink-0">
-            <AshokaEmblem className="w-8 h-12" />
-          </div>
+          <img
+            src="/sakshi_shield.png"
+            alt="SAKSHI Official Logo"
+            className="w-8 h-10 object-contain"
+          />
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xl font-extrabold text-[#162E52] tracking-tight">SAKSHI</span>
+              <span className="text-xl font-black text-[#162E52] tracking-tight">साक्षी <span className="text-base font-bold">SAKSHI</span></span>
               <span className="text-xs font-bold text-white bg-[#F5821F] px-2 py-0.5 rounded shadow-2xs">
                 {roleLabels[currentRole]?.label}
               </span>
             </div>
-            <p className="text-[11.5px] text-slate-500 font-medium">
-              Secure Audit & Kernel for Shared High-integrity Investigations
+            <p className="text-[11px] font-semibold text-[#F5821F]">
+              सुरक्षित • सत्यापित • न्याय के लिए तैयार &nbsp;<span className="text-slate-300 font-normal">|</span>&nbsp; <span className="text-slate-600 font-medium text-[10px]">SECURE • VERIFIABLE • COURT-READY</span>
             </p>
           </div>
         </div>
+
+
 
         {/* Center/Right: Role Switcher & Active Officer Profile */}
         <div className="flex items-center gap-3 sm:gap-4">

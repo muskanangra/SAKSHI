@@ -11,7 +11,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenLogin }) => {
     <div className="w-full flex flex-col bg-white">
       
       {/* 1. HERO SECTION (Grand, Panoramic with Monuments) */}
-      <section className="relative w-full min-h-[640px] lg:min-h-[680px] bg-gradient-to-br from-[#FFF3E6] via-[#FFFFFF] to-[#EEF8F1] overflow-hidden flex flex-col justify-between pt-10 pb-16">
+      <section className="relative w-full min-h-[640px] lg:min-h-[700px] bg-gradient-to-br from-[#FFF3E6] via-[#FFFFFF] to-[#EEF8F1] overflow-hidden flex flex-col justify-between pt-6 sm:pt-8 pb-20 sm:pb-28">
         
         {/* Background Ambient Layers */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -26,7 +26,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenLogin }) => {
           </div>
 
           {/* Panoramic Blended Monuments at the Bottom */}
-          <div className="absolute bottom-0 left-0 w-full h-[320px] sm:h-[400px] lg:h-[460px] opacity-75">
+          <div className="absolute bottom-0 left-0 w-full h-[280px] sm:h-[360px] lg:h-[420px] opacity-75">
             <div
               className="w-full h-full bg-no-repeat bg-bottom bg-cover sm:bg-contain"
               style={{
@@ -40,30 +40,38 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenLogin }) => {
           </div>
         </div>
 
-        {/* Hero Content Container */}
-        <div className="max-w-5xl mx-auto px-6 text-center relative z-10 my-auto">
-          {/* Initiative Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-slate-200 shadow-2xs backdrop-blur-xs text-xs font-semibold text-[#162E52] mb-6">
-            <span className="w-2 h-2 rounded-full bg-[#F5821F]" />
-            <span>National Inter-Agency Judicial & Law Enforcement Kernel</span>
+        {/* Hero Content Container (Shifted Upwards) */}
+        <div className="max-w-5xl mx-auto px-6 text-center relative z-10 my-auto -mt-4 sm:-mt-8 flex flex-col items-center">
+          
+          {/* Official SAKSHI Shield Logo */}
+          <div className="w-20 h-24 sm:w-26 sm:h-32 mb-4 drop-shadow-md">
+            <img
+              src="/sakshi_shield.png"
+              alt="SAKSHI Official Logo"
+              className="w-full h-full object-contain"
+            />
           </div>
 
-          {/* Main Hero Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black text-[#162E52] tracking-tight leading-[1.15] mb-4">
-            Unified Cryptographic Audit for <br className="hidden sm:inline" />
-            <span className="text-[#F5821F]">Legal & Investigation Documents</span>
+          {/* SAKSHI Title */}
+          <h1 className="text-4xl sm:text-6xl lg:text-[62px] font-black text-[#162E52] tracking-tight leading-none mb-3">
+            SAKSHI
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-sm sm:text-lg text-slate-600 font-normal max-w-2xl mx-auto mb-8 leading-relaxed">
-            <strong>SAKSHI</strong> provides a tamper-proof cryptographic chain of custody, enabling seamless, authorized sharing of court records, police case diaries, and forensic evidence across India.
+          {/* Secure Audit & Kernel Subtitle */}
+          <p className="text-base sm:text-2xl font-bold text-[#F5821F] tracking-tight mb-4 max-w-2xl leading-snug">
+            Secure Audit & Kernel for Shared High-integrity Investigations
           </p>
 
-          {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* Compact Platform Subtitle */}
+          <p className="text-xs sm:text-base text-slate-700 font-medium max-w-2xl mx-auto leading-relaxed bg-white/75 backdrop-blur-2xs p-3.5 rounded-2xl border border-slate-200/60 shadow-2xs">
+            A secure, interoperable Evidence Intelligence Platform that converts digital evidence into verifiable, traceable, BSA-compliant, investigation-ready and court-ready evidence.
+          </p>
+
+          {/* Spatially Shifted LOWER Action CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 sm:mt-12">
             <button
               onClick={onOpenLogin}
-              className="w-full sm:w-auto px-8 py-3.5 bg-[#F5821F] hover:bg-[#E06D0B] active:bg-[#C95B00] text-white font-bold text-base rounded-xl shadow-md flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5 cursor-pointer"
+              className="w-full sm:w-auto px-9 py-3.5 bg-[#F5821F] hover:bg-[#E06D0B] active:bg-[#C95B00] text-white font-bold text-sm sm:text-base rounded-xl shadow-md flex items-center justify-center gap-2.5 transition-all transform hover:-translate-y-0.5 cursor-pointer"
             >
               <Lock className="w-4 h-4 stroke-[2.2]" />
               <span>Officer Portal Login</span>
@@ -71,34 +79,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenLogin }) => {
             </button>
             <a
               href="#capabilities"
-              className="w-full sm:w-auto px-7 py-3.5 bg-white/90 hover:bg-slate-100 text-[#162E52] font-bold text-base rounded-xl border border-slate-200/90 shadow-2xs transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-7 py-3.5 bg-white/90 hover:bg-slate-100 text-[#162E52] font-bold text-sm sm:text-base rounded-xl border border-slate-200/90 shadow-2xs transition-all flex items-center justify-center gap-2"
             >
-              <span>Explore Platform</span>
+              <span>Explore Architecture</span>
               <ChevronRight className="w-4 h-4" />
             </a>
           </div>
 
-          {/* Live Trust Metrics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 pt-8 border-t border-slate-200/60 max-w-3xl mx-auto text-left">
-            <div className="bg-white/80 backdrop-blur-xs p-3 rounded-lg border border-slate-200/50">
-              <span className="block text-xl font-extrabold text-[#162E52]">28+ States</span>
-              <span className="text-[11px] text-slate-500 font-medium">Judicial Interoperability</span>
-            </div>
-            <div className="bg-white/80 backdrop-blur-xs p-3 rounded-lg border border-slate-200/50">
-              <span className="block text-xl font-extrabold text-[#162E52]">SHA-256</span>
-              <span className="text-[11px] text-slate-500 font-medium">Immutable Hash Ledger</span>
-            </div>
-            <div className="bg-white/80 backdrop-blur-xs p-3 rounded-lg border border-slate-200/50">
-              <span className="block text-xl font-extrabold text-[#162E52]">100% Audit</span>
-              <span className="text-[11px] text-slate-500 font-medium">Chain of Custody Tracking</span>
-            </div>
-            <div className="bg-white/80 backdrop-blur-xs p-3 rounded-lg border border-slate-200/50">
-              <span className="block text-xl font-extrabold text-[#162E52]">Tier-IV NIC</span>
-              <span className="text-[11px] text-slate-500 font-medium">National Cloud Hosting</span>
-            </div>
-          </div>
         </div>
       </section>
+
+
+
 
       {/* 2. CORE SYSTEM CAPABILITIES */}
       <section id="capabilities" className="py-16 bg-slate-50/70 border-b border-slate-200/80">

@@ -44,9 +44,10 @@ export const Footer: React.FC = () => {
         {/* Bottom Center: Copyright */}
         <div className="border-t border-slate-700/50 pt-5 text-center text-[11px] text-slate-400">
           <p>
-            © 2025 SAKSHI: Secure Audit & Kernel for Shared High-integrity Investigations. All Rights Reserved.
+            © 2026 SAKSHI • सुरक्षित • सत्यापित • न्याय के लिए तैयार • SECURE • VERIFIABLE • COURT-READY. All Rights Reserved.
           </p>
         </div>
+
       </div>
     </footer>
   );

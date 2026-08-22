@@ -68,9 +68,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onLoginSuccess }) => {
             </div>
 
             {/* Subtext Paragraph */}
-            <p className="text-[15px] sm:text-[16px] text-slate-600 font-normal leading-relaxed max-w-[390px] pt-1.5">
-              A unified platform for secure management of legal, investigation and court documents across India.
+            <p className="text-[14px] sm:text-[15px] text-slate-600 font-normal leading-relaxed max-w-[420px] pt-1.5">
+              A secure, interoperable Evidence Intelligence Platform that converts digital evidence into verifiable, traceable, BSA-compliant, and court-ready evidence.
             </p>
+
           </div>
         </div>
 
