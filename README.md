@@ -100,41 +100,11 @@ SAKSHI enforces strict role-based access control (RBAC) across 7 specialized por
 - **Security & Cryptography**: Standard Web Cryptography API (SHA-256 bit-stream hashing)
 - **State Management**: Centralized reactive Context API (`SakshiContext`)
 
----
-
-## 🚀 Quick Start Guide
-
-### Prerequisites
-- Node.js (v18.0.0 or higher)
-- npm (v9.0.0 or higher)
-
-### Installation & Setup
-
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/muskanangra/SAKSHI.git
-   cd SAKSHI
-   ```
-
-2. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Start Development Server**:
-   ```bash
-   npm run dev
-   ```
-   Open your browser and navigate to `http://localhost:5173`.
-
-4. **Production Build & Verification**:
-   ```bash
-   npm run build
-   ```
 
 ---
 
 ## 🔒 Statutory & Regulatory Compliance
+
 
 - **Bharatiya Sakshya Adhiniyam, 2023 (BSA)**: Section 57 (Primary Evidence), Section 63 (Admissibility of Electronic Records), Section 63(4) (Schedule Certificate).
 - **Bharatiya Nagarik Suraksha Sanhita, 2023 (BNSS)**: Section 105 (Mandatory Videography & Digital Seizure).
