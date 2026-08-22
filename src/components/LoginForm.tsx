@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import { User, Lock, Eye, EyeOff, ChevronRight, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
 import { SecurityBadge, TricolorRibbonMedal } from './Emblems';
+import { useSakshi } from '../context/SakshiContext';
+import { SakshiRole } from '../types/sakshi';
 
-export const LoginForm: React.FC = () => {
-  const [officialId, setOfficialId] = useState('');
-  const [password, setPassword] = useState('');
+interface LoginFormProps {
+  onLoginSuccess?: () => void;
+}
+
+export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
+  const { switchRole, officers } = useSakshi();
+  const [officialId, setOfficialId] = useState('OFF-DIST-01');
+  const [password, setPassword] = useState('GovSecure@2026');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loginStep, setLoginStep] = useState<'form' | 'otp' | 'success'>('form');
-  const [otpValue, setOtpValue] = useState('');
+  const [otpValue, setOtpValue] = useState('482910');
+  const [selectedRole, setSelectedRole] = useState<SakshiRole>('district_admin');
   const [notification, setNotification] = useState<string | null>(null);
 
   const handleLoginSubmit = (e: React.FormEvent) => {
@@ -38,14 +46,17 @@ export const LoginForm: React.FC = () => {
     setTimeout(() => {
       setIsLoading(false);
       setLoginStep('success');
+      switchRole(selectedRole);
+      if (onLoginSuccess) {
+        setTimeout(() => {
+          onLoginSuccess();
+        }, 800);
+      }
     }, 600);
   };
 
   const handleReset = () => {
     setLoginStep('form');
-    setOfficialId('');
-    setPassword('');
-    setOtpValue('');
     setNotification(null);
   };
 
@@ -80,6 +91,32 @@ export const LoginForm: React.FC = () => {
 
             {/* Login Form Fields */}
             <form onSubmit={handleLoginSubmit} className="space-y-4 text-left">
+              
+              {/* Role / Clearance Selector for Demo */}
+              <div>
+                <label className="block text-[13px] font-semibold text-slate-700 mb-1.5">
+                  Official Role & Portal
+                </label>
+                <select
+                  value={selectedRole}
+                  onChange={(e) => {
+                    const r = e.target.value as SakshiRole;
+                    setSelectedRole(r);
+                    const match = officers.find(o => o.role === r);
+                    if (match) setOfficialId(match.id);
+                  }}
+                  className="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-md text-[13px] text-slate-800 focus:outline-none focus:ring-1.5 focus:ring-gov-navy focus:bg-white"
+                >
+                  <option value="district_admin">1. District Admin (Operations Portal)</option>
+                  <option value="central_admin">2. Central Admin (National Command)</option>
+                  <option value="investigating_officer">3. Investigating Officer (Case Diary)</option>
+                  <option value="womens_safety_officer">4. Women's Safety Record Officer</option>
+                  <option value="forensic_officer">5. Evidence & Forensic Officer</option>
+                  <option value="prosecuting_officer">6. Legal / Prosecuting Officer</option>
+                  <option value="senior_officer">7. Senior Supervisory Officer</option>
+                </select>
+              </div>
+
               {/* Field 1: Official ID */}
               <div>
                 <label
@@ -206,12 +243,12 @@ export const LoginForm: React.FC = () => {
                 disabled={isLoading}
                 className="w-full py-2.5 bg-[#162E52] hover:bg-[#0F2A4A] text-white font-bold text-sm rounded-lg transition-colors cursor-pointer"
               >
-                {isLoading ? 'Verifying OTP...' : 'Verify & Enter SAKSHI Portal'}
+                {isLoading ? 'Verifying OTP...' : 'Verify & Launch Portal'}
               </button>
               <button
                 type="button"
                 onClick={handleReset}
-                className="text-xs text-slate-500 hover:text-gov-navy underline block mx-auto"
+                className="text-xs text-slate-500 hover:text-gov-navy underline block mx-auto cursor-pointer"
               >
                 Back to credentials
               </button>
@@ -232,12 +269,6 @@ export const LoginForm: React.FC = () => {
             <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
               <div className="bg-[#138808] h-full rounded-full w-full animate-pulse" />
             </div>
-            <button
-              onClick={handleReset}
-              className="text-xs text-gov-navy font-semibold hover:underline mt-2 inline-block cursor-pointer"
-            >
-              Sign out / Return to login
-            </button>
           </div>
         )}
 

@@ -2,7 +2,11 @@ import React from 'react';
 import { AshokaChakra, BirdsVector } from './Emblems';
 import { LoginForm } from './LoginForm';
 
-export const HeroSection: React.FC = () => {
+interface HeroSectionProps {
+  onLoginSuccess?: () => void;
+}
+
+export const HeroSection: React.FC<HeroSectionProps> = ({ onLoginSuccess }) => {
   return (
     <section className="relative w-full min-h-[680px] lg:min-h-[720px] bg-gradient-to-br from-[#FFF3E6] via-[#FFFFFF] to-[#EEF8F1] overflow-hidden flex flex-col justify-between">
       
@@ -72,7 +76,7 @@ export const HeroSection: React.FC = () => {
 
         {/* RIGHT COLUMN: Elevated Login Card */}
         <div className="lg:col-span-5 flex items-center justify-center lg:justify-end">
-          <LoginForm />
+          <LoginForm onLoginSuccess={onLoginSuccess} />
         </div>
 
       </div>
