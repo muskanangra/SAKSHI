@@ -1,6 +1,7 @@
 import React from 'react';
 import { Lock, ArrowLeft } from 'lucide-react';
-import { AshokaEmblem, IndianFlagBadge } from './Emblems';
+import { IndianFlagBadge } from './Emblems';
+
 
 interface HeaderProps {
   currentView: 'landing' | 'login';
@@ -27,31 +28,39 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate }) => {
       {/* Main Header Container */}
       <div className="w-full px-4 sm:px-8 lg:px-12 py-3 flex items-center justify-between min-h-[84px]">
         
-        {/* Left Edge: Authentic State Emblem of India + SAKSHI Title & Subtitle */}
+        {/* Left Edge: SAKSHI Official Eye-Shield Logo + Hindi/English Brand Name + Taglines */}
         <button
           onClick={() => onNavigate('landing')}
-          className="flex items-center gap-3.5 sm:gap-4.5 text-left group cursor-pointer focus:outline-none"
+          className="flex items-center gap-3.5 sm:gap-4 text-left group cursor-pointer focus:outline-none"
         >
           <div className="flex-shrink-0 transition-transform group-hover:scale-105">
-            <AshokaEmblem className="w-9 sm:w-10 h-13 sm:h-15" />
+            <img
+              src="/sakshi_shield.png"
+              alt="SAKSHI Official Logo"
+              className="w-10 sm:w-12 h-12 sm:h-14 object-contain drop-shadow-xs"
+            />
           </div>
 
           <div className="flex flex-col justify-center">
             <div className="flex items-center gap-2">
-              <h1 className="text-[19px] sm:text-[23px] lg:text-[25px] font-extrabold text-[#162E52] tracking-tight leading-tight">
-                SAKSHI
+              <h1 className="text-[20px] sm:text-[24px] font-black text-[#162E52] tracking-tight leading-none">
+                साक्षी <span className="text-[17px] sm:text-[20px] font-bold tracking-wider text-[#162E52]">SAKSHI</span>
               </h1>
               {currentView === 'login' && (
-                <span className="hidden md:inline-block text-[10.5px] font-bold text-white bg-[#162E52] px-2 py-0.5 rounded tracking-wide uppercase">
+                <span className="hidden md:inline-block text-[10px] font-bold text-white bg-[#162E52] px-2 py-0.5 rounded tracking-wide uppercase">
                   Officer Gateway
                 </span>
               )}
             </div>
-            <p className="text-[12px] sm:text-[13.5px] text-slate-600 font-medium leading-tight mt-0.5">
-              Secure Audit & Kernel for Shared High-integrity Investigations
+            <p className="text-[11px] sm:text-[12.5px] font-semibold text-[#F5821F] leading-tight mt-1">
+              सुरक्षित • सत्यापित • न्याय के लिए तैयार &nbsp;<span className="text-slate-300 font-normal">|</span>&nbsp; <span className="text-slate-600 font-medium tracking-wider text-[10.5px] sm:text-[11.5px]">SECURE • VERIFIABLE • COURT-READY</span>
             </p>
           </div>
+
+
         </button>
+
+
 
         {/* Right Edge: Navigation Controls & Indian Flag */}
         <div className="flex items-center gap-4 sm:gap-6 pl-4 flex-shrink-0">

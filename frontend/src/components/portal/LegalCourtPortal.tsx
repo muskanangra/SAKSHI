@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
-import { Calendar, CheckCircle2, Plus, Bookmark } from 'lucide-react';
+import {
+  Calendar,
+  CheckCircle2,
+  Plus,
+  Bookmark,
+  Download,
+  ShieldCheck
+} from 'lucide-react';
 import { useSakshi } from '../../context/SakshiContext';
-import { BSAComplianceWidget } from '../compliance/BSAComplianceWidget';
-import { CourtPackageGenerator } from '../court/CourtPackageGenerator';
+import { BSA63CertificateModal } from './BSA63CertificateModal';
 
 export const LegalCourtPortal: React.FC = () => {
-  const { currentOfficer, legalRecords, addCourtOrder } = useSakshi();
+  const {
+    currentOfficer,
+    legalRecords,
+    addCourtOrder,
+    generateCourtPackage,
+    evidenceItems
+  } = useSakshi();
   
   const [selectedRecordId, setSelectedRecordId] = useState<string>(legalRecords[0]?.id || '');
   const [newOrderText, setNewOrderText] = useState('');
   const [showOrderModal, setShowOrderModal] = useState<boolean>(false);
+  const [selectedEvidenceForCert, setSelectedEvidenceForCert] = useState<any>(null);
+  const [showCertModal, setShowCertModal] = useState<boolean>(false);
   const [notification, setNotification] = useState<string | null>(null);
 
   const selectedRecord = legalRecords.find(r => r.id === selectedRecordId) || legalRecords[0];
+  const caseEvids = evidenceItems.filter(e => e.firNumber === selectedRecord?.firNumber);
 
   const handleAddOrder = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,15 +39,21 @@ export const LegalCourtPortal: React.FC = () => {
     setTimeout(() => setNotification(null), 3500);
   };
 
+  const handleGeneratePackage = () => {
+    const pkg = generateCourtPackage('CASE-2026-DL-001');
+    setNotification(`Master Court Package ${pkg.id} assembled with digital signatures and BSA Section 63 Schedule.`);
+    setTimeout(() => setNotification(null), 4000);
+  };
+
   return (
     <div className="w-full min-h-screen bg-slate-50 p-4 sm:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
         
         {/* Top Header */}
-        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded">
+              <span className="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full">
                 Prosecution & Judicial Interoperability
               </span>
               <span className="text-xs font-mono text-slate-500 font-bold">• Directorate of Prosecution</span>
@@ -45,10 +66,17 @@ export const LegalCourtPortal: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={handleGeneratePackage}
+              className="px-4 py-2.5 bg-[#F5821F] hover:bg-[#E06D0B] text-white font-bold text-xs rounded-xl flex items-center gap-2 transition-colors cursor-pointer shadow-sm"
+            >
+              <Download className="w-4 h-4" />
+              <span>Generate Master Court Package</span>
+            </button>
             <button
               onClick={() => setShowOrderModal(true)}
-              className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
+              className="px-4 py-2.5 bg-[#162E52] hover:bg-[#0F2A4A] text-white font-bold text-xs rounded-xl flex items-center gap-2 transition-colors cursor-pointer shadow-sm"
             >
               <Plus className="w-4 h-4" />
               <span>Record Court Order</span>
@@ -57,7 +85,7 @@ export const LegalCourtPortal: React.FC = () => {
         </div>
 
         {notification && (
-          <div className="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-xl text-xs font-semibold flex items-center gap-2">
+          <div className="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-2xl text-xs font-semibold flex items-center gap-2 animate-in fade-in duration-150">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
             <span>{notification}</span>
           </div>
@@ -108,26 +136,64 @@ export const LegalCourtPortal: React.FC = () => {
 
           {/* Right Column: Full Court Proceeding Docket */}
           {selectedRecord && (
-            <div className="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200 shadow-2xs space-y-6">
+            <div className="lg:col-span-7 bg-white rounded-3xl p-6 border border-slate-200 shadow-2xs space-y-6">
               
               {/* Docket Top Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
                 <div>
-                  <span className="text-xs font-mono font-bold text-amber-900 bg-amber-50 px-2.5 py-0.5 rounded border border-amber-200">
+                  <span className="text-xs font-mono font-bold text-amber-900 bg-amber-50 px-2.5 py-0.5 rounded-md border border-amber-200">
                     {selectedRecord.courtCaseNumber}
                   </span>
                   <h3 className="text-base font-bold text-[#162E52] mt-1.5">{selectedRecord.courtName}</h3>
                   <p className="text-xs text-slate-500">Presiding Judge: <strong>{selectedRecord.presidingJudge}</strong></p>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-100 text-amber-900 block font-mono">
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 block font-mono">
                     {selectedRecord.currentStage}
                   </span>
                 </div>
               </div>
 
+              {/* Digital Evidence Exhibits Concordance Table */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#162E52] flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                    <span>Admissible Digital Exhibits Concordance ({caseEvids.length}):</span>
+                  </span>
+                </div>
+
+                <div className="space-y-2">
+                  {caseEvids.map((ev, idx) => (
+                    <div key={ev.id} className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div className="space-y-0.5">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-[#162E52]">Exhibit P-{idx + 1}:</span>
+                          <span className="font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded text-[11px]">{ev.id}</span>
+                          <span className="text-slate-800 font-semibold">{ev.title}</span>
+                        </div>
+                        <span className="text-[10.5px] font-mono text-slate-500 block">
+                          SHA-256: {ev.currentHashSHA256.slice(0, 32)}...
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            setSelectedEvidenceForCert(ev);
+                            setShowCertModal(true);
+                          }}
+                          className="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-300 font-bold text-[11px] text-[#162E52] rounded-lg cursor-pointer transition-colors"
+                        >
+                          View Sec 63 Cert
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               {/* Accused & Charges Overview */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs">
                 <div>
                   <span className="text-slate-400 block text-[10px] uppercase font-bold">Accused on Trial</span>
                   <span className="font-bold text-slate-800">{selectedRecord.accused.join(', ')}</span>
@@ -149,10 +215,10 @@ export const LegalCourtPortal: React.FC = () => {
               </div>
 
               {/* Prosecutor Strategy Notes */}
-              <div className="p-4 bg-blue-50/70 rounded-xl border border-blue-200/80 space-y-1.5 text-xs">
+              <div className="p-4 bg-blue-50/70 rounded-2xl border border-blue-200/80 space-y-1.5 text-xs">
                 <span className="font-bold text-[#162E52] flex items-center gap-1.5">
                   <Bookmark className="w-3.5 h-3.5 text-[#162E52]" />
-                  <span>Prosecutor Case Brief & Notes:</span>
+                  <span>Prosecutor Trial Strategy & Case Notes:</span>
                 </span>
                 <p className="text-slate-700 leading-relaxed">
                   {selectedRecord.prosecutorNotes}
@@ -162,11 +228,11 @@ export const LegalCourtPortal: React.FC = () => {
               {/* Court Orders History */}
               <div className="space-y-3">
                 <span className="text-xs font-bold text-[#162E52] block">
-                  Judicial Orders & Bail Rulings:
+                  Judicial Orders & Rulings Log:
                 </span>
                 <div className="space-y-2">
                   {selectedRecord.courtOrders.map((order, idx) => (
-                    <div key={idx} className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
+                    <div key={idx} className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-xs space-y-1">
                       <div className="flex justify-between items-center text-[11px] font-mono text-slate-500">
                         <span className="font-bold text-amber-900">Judicial Order #{idx + 1}</span>
                         <span>Date: {order.date}</span>
@@ -183,18 +249,12 @@ export const LegalCourtPortal: React.FC = () => {
 
         </div>
 
-        {/* Masterplan Compliance & Court Package Widgets */}
-        <div className="pt-6 border-t border-slate-200 space-y-6">
-          <BSAComplianceWidget />
-          <CourtPackageGenerator />
-        </div>
-
       </div>
 
       {/* Record Court Order Modal */}
       {showOrderModal && (
         <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-2xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200 space-y-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-xl border border-slate-200 space-y-4">
             <h3 className="text-base font-bold text-[#162E52]">Record Judicial Order</h3>
             <form onSubmit={handleAddOrder} className="space-y-3 text-xs">
               <div>
@@ -236,6 +296,13 @@ export const LegalCourtPortal: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* BSA Section 63 Schedule Certificate Modal */}
+      <BSA63CertificateModal
+        evidence={selectedEvidenceForCert}
+        isOpen={showCertModal}
+        onClose={() => setShowCertModal(false)}
+      />
 
     </div>
   );

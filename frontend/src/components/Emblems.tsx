@@ -23,6 +23,59 @@ export const AshokaEmblem: React.FC<{ className?: string; isWhite?: boolean }> =
 };
 
 /**
+ * Official SAKSHI Shield Logo Mark (Shield + Eye + Fingerprint + Circuit)
+ */
+export const SakshiShieldMark: React.FC<{ className?: string }> = ({
+  className = "w-12 h-12"
+}) => {
+  return (
+    <div className={`relative flex items-center justify-center select-none flex-shrink-0 ${className}`}>
+      <img
+        src="/sakshi_logo.png"
+        alt="SAKSHI Official Logo"
+        className="w-full h-full object-contain drop-shadow-xs"
+      />
+    </div>
+  );
+};
+
+/**
+ * Full Official SAKSHI Brand Card (Logo + Hindi/English Name + Taglines)
+ */
+export const SakshiBrandBanner: React.FC<{ className?: string; compact?: boolean }> = ({
+  className = "",
+  compact = false
+}) => {
+  return (
+    <div className={`flex flex-col items-center text-center ${className}`}>
+      <div className={compact ? "w-20 h-20 mb-2" : "w-28 h-28 sm:w-32 sm:h-32 mb-3"}>
+        <img
+          src="/sakshi_logo.png"
+          alt="SAKSHI Official Emblem"
+          className="w-full h-full object-contain drop-shadow-sm"
+        />
+      </div>
+      <div className="flex flex-col items-center">
+        <h2 className="text-2xl sm:text-3xl font-black text-[#162E52] tracking-tight">
+          साक्षी <span className="text-xl sm:text-2xl font-bold tracking-widest text-[#162E52]">SAKSHI</span>
+        </h2>
+        <div className="flex items-center gap-2 mt-1">
+          <span className="h-[1px] w-6 bg-slate-300" />
+          <span className="text-xs sm:text-sm font-bold text-[#F5821F]">
+            सुरक्षित • सत्यापित • न्याय के लिए तैयार
+          </span>
+          <span className="h-[1px] w-6 bg-slate-300" />
+        </div>
+        <p className="text-[11px] sm:text-xs font-bold text-[#162E52] tracking-widest uppercase mt-0.5">
+          SECURE • VERIFIABLE • COURT-READY
+        </p>
+      </div>
+    </div>
+  );
+};
+
+
+/**
  * 24-Spoke Official Ashoka Chakra
  */
 export const AshokaChakra: React.FC<{ className?: string; size?: number; color?: string; strokeWidth?: number }> = ({
